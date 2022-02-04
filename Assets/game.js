@@ -1,5 +1,5 @@
 //Player name entry
-window.alert("Welcome to Robots with Swords, chop a robot to pieces like you're Jeffrey friggin Dahmer!");
+window.alert("Welcome to Robots with Swords, where human warriors fight robots with regular ol' swords!");
 
 // Player Values
 var playerName = window.prompt("Every warrior has a cool name. What do you call yourself?");
@@ -10,66 +10,100 @@ var playerCoins = 10;
 console.log(playerName, playerHealth, playerAttack);
 
 //Enemy Values
-var enemyName = "Roborto";
+var enemyNames = ["Roborto", "Minotron", "Virus", "Leadfoot", "Meningitis"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
+for(var i=0; i<enemyNames.length; i++ ){
+    console.log(enemyNames[i]);
+    console.log(i);
+    console.log(enemyNames[i]+" is at " + i +" index");
+};
+
+window.alert("A challenger approaches!");
+window.alert("Draw swords, time to fight a robot " + playerName + "!");
+
+
+
 
 // Start Robot Fight
-var fight = function (){
+var fight = function (enemyNames){
     //Round intro
-    window.alert("A challenger approaches!");
+    while(playerHealth > 0 && enemyHealth > 0){
+
     //Fight or skip
-    var fightPrompt = window.prompt("The robot asks will you FIGHT or FLEE? What will you do?");
-    // Round Start
-    if(fightPrompt === "FIGHT"||fightPrompt === "fight"){   
+        var fightPrompt = window.prompt("The robot asks will you FIGHT or FLEE? What will you do?");
+        // Round Start
+        if(fightPrompt === "FLEE" || fightPrompt === "flee"){
+            var confirmSkip = window.confirm("You mean you won't fight " +enemyNames+ " the robot? The point of the game is to FIGHT the ROBOTS with SWORDS...");
+            if (confirmSkip) {
+                window.alert(enemyNames + " has decided to spare your life for 10 coins. There's other robots to fight anyway");
+                playerCoins = playerCoins - 10;
+                console.log("playerCoins", playerCoins);
+                break;
+            }
+        }
+            
+            
         enemyHealth = enemyHealth - playerAttack;
-        window.alert("Draw swords, time to fight a robot " + playerName + "!");
-        window.alert("Meet your Opponent " + enemyName + "!");
+
         console.log(
-            playerName + " slashed " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+            playerName + " slashed " + enemyNames + ". " + enemyNames + " now has " + enemyHealth + " health remaining."
         );
         window.alert( 
-            "You slashed " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+            "You slashed " + enemyNames + ". " + enemyNames + " now has " + enemyHealth + " health remaining."
         );
             // Check Enemy Health
         if(enemyHealth <= 0){
             console.log(playerName + " wins!");
-            window.alert(enemyName + "incurred too much damage and commited robot seppoku, " + playerName + " wins!");
+            window.alert(enemyNames + " incurred too much damage and commited robot seppoku, " + playerName + " wins!");
+            playerCoins = playerCoins +20;
+            break;
         } else {
             console.log("attack again.");
-            window.alert(enemyName + " is not impressed, keep fighting " + playerName + "!");
+            window.alert(enemyNames + " is not impressed, keep fighting " + playerName + "!");
         }; 
             //Check Player health
         playerHealth = playerHealth - enemyAttack
         console.log(
-            enemyName + " hit " + playerName + ", " + playerName+ " has " + playerHealth + " health remaining."
+            enemyNames + " hit " + playerName + ", " + playerName+ " has " + playerHealth + " health remaining."
         );
         window.alert(
-            enemyName + " slashed you back! Holy cow " + playerName + ", you're bleeding pretty good there! You have " + playerHealth + " health remaining!"
+            enemyNames + " slashed you back! Holy cow " + playerName + ", you're bleeding pretty good there! You have " + playerHealth + " health remaining!"
         );
+            //check player health
         if(playerHealth <= 0){
             console.log("game over");
                 if(playerCoins > 1){
-                    window.alert("You stagger on your feet due to blood loss. " + enemyName + " chops you in half vertically and takes " + playerCoins + " bloody coins from your pockets while lauging robotically. You die in disgrace.");
+                    window.alert("You stagger on your feet due to blood loss. " + enemyNames + " chops you in half vertically and takes " + playerCoins + " bloody coins from your pockets while lauging robotically.");
                 }else {
-                    window.alert("You stagger on your feet due to blood loss. " + enemyName + " chops you in half vertically and takes " + playerCoins + " bloody coin from your pocket while lauging robotically. You die in disgrace.");
+                    window.alert("You stagger on your feet due to blood loss. " + enemyNames + " chops you in half vertically and takes " + playerCoins + " bloody coin from your pocket while lauging robotically.");
+                break;
                 };
         } else {
             console.log("attack again.");
-            window.alert(enemyName + " is confused. Why aren't you dead " + playerName + "?!");
-        };
-    }else if(fightPrompt === "FLEE" || fightPrompt === "flee"){
-        var confirmSkip = window.confirm("You mean you won't fight " +enemyName+ " the robot?");
-        if (confirmSkip) {
-            window.alert(enemyName + " has decided to spare your life for 2 coins. There's other robots to fight anyway");
-            playerCoins = playerCoins - 2;
-        } else {
-            fight();
+            window.alert(enemyNames + " is confused. Why aren't you dead " + playerName + "?!");
         }
-    } else {
-        window.prompt("What? I don't want your excuses! Will you *hint hint* FIGHT or FLEE?");
-    };
+    }
 };
 
-fight();
+for(var i=0; i < enemyNames.length; i++) {
+    if(playerHealth > 0){
+        window.alert("Round " + (i+1) + " vs " + pickEnemyName + ", Cut him up" + playerName + "!");
+        var pickEnemyName = enemyNames[i];
+        enemyHealth = 50;
+        fight(pickEnemyName);
+    } else {
+        window.alert("You die in disgrace.")
+        break;
+    }
+
+
+}
+
+
+// game states
+
+// WIN - Player defeats all the robots
+//     * fight all robots
+//     * defeats all robots
