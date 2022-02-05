@@ -83,27 +83,93 @@ var fight = function (enemyNames){
         } else {
             console.log("attack again.");
             window.alert(enemyNames + " is confused. Why aren't you dead " + playerName + "?!");
+        };
+        if(playerHealth > 0 && enemyNames.length - 1){
+            var storeConfirm = window.confirm("The fight is over. You should visit the store before another robot gets here. Would you like to visit the store?");
+            if(storeConfirm){
+                shop();
+            }
+        } 
+    }
+    
+};
+fight();
+
+var startGame = function(){
+    for(var i=0; i < enemyNames.length; i++) {
+        playerHealth = 100;
+        playerAttack = 10;
+        playerCoins = 10;
+
+        if(playerHealth > 0){
+            window.alert("Round " + (i+1) + " vs " + pickEnemyName + ", Cut him up" + playerName + "!");
+            var pickEnemyName = enemyNames[i];
+            enemyHealth = 50;
+            fight(pickEnemyName);
+        } else {
+            window.alert("You die in disgrace.")
+            break;
         }
     }
 };
+startGame();
 
-for(var i=0; i < enemyNames.length; i++) {
+var endGame = function(){
     if(playerHealth > 0){
-        window.alert("Round " + (i+1) + " vs " + pickEnemyName + ", Cut him up" + playerName + "!");
-        var pickEnemyName = enemyNames[i];
-        enemyHealth = 50;
-        fight(pickEnemyName);
+        window.alert("Well fought, brave warrior. You beat all the robots and made it out with " + playerCoins + ".");
+
     } else {
-        window.alert("You die in disgrace.")
-        break;
+        window.alert("You die in disgrace.");
     }
+};
+endGame();
 
 
+var playAgain = window.confirm("Would you like to play again?");
+
+if (playAgain) {
+    startGame();
+} else {
+    window.alert=("Thanks for playing, " + playerName + "! See you next time!");
+};
+
+endGame();
+
+var shop = function(){
+    var shopOptions = window.prompt("Welcome to the store! Would you like to REFILL your health, UPGRADE your sword, or LEAVE? Don't waste my time!;")
+        switch(shopOptions){
+            case "refill":
+                if(playerCoins >=10){
+                    window.alert("For the price of 10 coins, you're back at 100 health again" + playerName);
+                    playerHealth = 100
+                    playerCoins = playerCoins - 10;
+                   
+                } else {
+                    window.alert("You're too poor to afford this!")
+                }
+                break;
+            case "upgrade":
+                if(playerCoins >= 6){
+                    window.alert("For the price of 6 coins you get this sweet new sword! You deal 10 more attack damage");
+                    playerAttack = playerAttack + 10;
+                    playerCoins = playerCoins - 6;
+                } else {
+                    window.alert("You're too poor for this!")
+                }
+                break;
+            case "leave":
+                window.alert("Well, good luck out there " + playerName);
+                break;
+            default:
+                window.alert("Don't waste my time " + playerName + " do you want to REFILL or UPGRADE?");
+                shop();
+                break;
+            }
+        }
+    }            
 }
-
-
 // game states
 
 // WIN - Player defeats all the robots
 //     * fight all robots
-//     * defeats all robots
+//     * defeats all robots]
