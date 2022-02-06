@@ -105,7 +105,6 @@ var startGame = function(){
         if(playerHealth > 0){
             window.alert("Round " + (i+1) + " vs " + enemyNames[i] + ", Cut him up " + playerName + "!");
             var pickEnemyName = enemyNames[i];
-            enemyHealth = 50;
             fight(pickEnemyName);
             if(playerHealth > 0 && enemyNames.length - 1) {
                 var storeConfirm = window.confirm("The fight is over. You should visit the store before another robot gets here. Would you like to visit the store?");
