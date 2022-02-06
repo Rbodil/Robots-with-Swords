@@ -38,14 +38,14 @@ var fight = function (enemyName){
             var confirmSkip = window.confirm("You mean you won't fight " + enemyName + " the robot? The point of the game is to FIGHT the ROBOTS with SWORDS...");
             if (confirmSkip) {
                 window.alert(enemyName + " has decided to spare your life for 10 coins. There's other robots to fight anyway");
-                playerCoins = playerCoins - 10;
+                playerCoins = Math.max(0, playerCoins - 10);
                 console.log("playerCoins", playerCoins);
                 break;
             }
         };
+        var damage = randomNumber(playerAttack - 3, playerAttack);  
             
-            
-        enemyHealth = enemyHealth - playerAttack;
+        enemyHealth = Math.max(0, enemyHealth - damage);
 
         console.log(
             playerName + " slashed " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
@@ -64,7 +64,9 @@ var fight = function (enemyName){
             window.alert(enemyName + " is not impressed, keep fighting " + playerName + "!");
         }; 
             //Check Player health
-        playerHealth = playerHealth - enemyAttack
+        var damage = randomNumber(enemyAttack - 3, enemyAttack);    
+
+        playerHealth = Math.max(0, playerHealth - damage);
         console.log(
             enemyName + " hit " + playerName + ", " + playerName+ " has " + playerHealth + " health remaining."
         );
@@ -178,6 +180,12 @@ var shop = function(){
             break;
         
     }
+};
+
+var randomNumber = function(min, max){
+    var value = Math.floor(Math.random()*(max - min +1) + min);
+
+    return value;
 };
 
 startGame();
