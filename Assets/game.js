@@ -1,4 +1,3 @@
-// Start Robot Fight
 var fight = function (enemyInfo){
     //Round intro
     while(playerInfo.health > 0 && enemyInfo.health > 0){
@@ -145,8 +144,17 @@ var randomNumber = function(min, max){
     return value;
 };
 
+var getPlayerName = function{
+    var getPN = window.prompt("Every warrior has a cool name. What do you call yourself?");
+    while (getPN === "" || getPN === null){
+        getPN = prompt("Hold on there butt head, identify yourself!")
+    }
+    console.log("Player known as " + getPN);
+    return getPN;
+};
+
 var playerInfo = {
-    name : window.prompt("Every warrior has a cool name. What do you call yourself?"),
+    name : getPlayerName(),
     health : 100,
     attack : 10,
     coins : 10,
