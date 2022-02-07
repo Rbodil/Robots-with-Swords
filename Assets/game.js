@@ -1,93 +1,65 @@
-//Player name entry
-window.alert("Welcome to Robots with Swords, where human warriors fight robots with regular ol' swords!");
-
-// Player Values
-var playerName = window.prompt("Every warrior has a cool name. What do you call yourself?");
-var playerHealth = 100;
-var playerAttack = 10;
-var playerCoins = 10;
-
-console.log(playerName, playerHealth, playerAttack);
-
-//Enemy Values
-var enemyNames = ["Roborto", "Minotron", "Virus", "Leadfoot", "Meningitis"];
-var enemyHealth = 50;
-var enemyAttack = 12;
-
-for(var i=0; i<enemyNames.length; i++ ){
-    console.log(enemyNames[i]);
-    console.log(i);
-    console.log(enemyNames[i]+" is at " + i +" index");
-};
-
-window.alert("A challenger approaches!");
-window.alert("Draw swords, time to fight a robot " + playerName + "!");
-
-
-
-
 // Start Robot Fight
-var fight = function (enemyName){
+var fight = function (enemyInfo){
     //Round intro
-    while(playerHealth > 0 && enemyHealth > 0){
+    while(playerInfo.health > 0 && enemyInfo.health > 0){
 
     //Fight or skip
         var fightPrompt = window.prompt("The robot asks will you FIGHT or FLEE? What will you do?");
         // Round Start
         if(fightPrompt === "FLEE" || fightPrompt === "flee"){
-            var confirmSkip = window.confirm("You mean you won't fight " + enemyName + " the robot? The point of the game is to FIGHT the ROBOTS with SWORDS...");
+            var confirmSkip = window.confirm("You mean you won't fight " + enemyInfo.name + " the robot? The point of the game is to FIGHT the ROBOTS with SWORDS...");
             if (confirmSkip) {
-                window.alert(enemyName + " has decided to spare your life for 10 coins. There's other robots to fight anyway");
-                playerCoins = Math.max(0, playerCoins - 10);
-                console.log("playerCoins", playerCoins);
+                window.alert(enemyInfo.name + " has decided to spare your life for 10 coins. There's other robots to fight anyway");
+                playerInfo.coins = Math.max(0, playerInfo.coins - 10);
+                console.log("playerInfo.coins = ", playerInfo.coins);
                 break;
             }
         };
-        var damage = randomNumber(playerAttack - 3, playerAttack);  
+        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);  
             
-        enemyHealth = Math.max(0, enemyHealth - damage);
+        enemyInfo.health = Math.max(0, enemyInfo.health - damage);
 
         console.log(
-            playerName + " slashed " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+            playerInfo.name + " slashed " + enemyInfo.name + ". " + enemyInfo.name + " now has " + enemyInfo.health + " health remaining."
         );
         window.alert( 
-            "You slashed " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+            "You slashed " + enemyInfo.name + ". " + enemyInfo.name + " now has " + enemyInfo.health + " health remaining."
         );
             // Check Enemy Health
-        if(enemyHealth <= 0){
-            console.log(playerName + " wins!");
-            window.alert(enemyName + " incurred too much damage, then out of overwhelming shame commited robot seppoku, " + playerName + " wins!");
-            playerCoins = playerCoins + 20;
+        if(enemyInfo.health <= 0){
+            console.log(playerInfo.name + " wins!");
+            window.alert(enemyInfo.name + " incurred too much damage, then out of overwhelming shame commited robot seppoku, " + playerInfo.name + " wins!");
+            playerInfo.coins = playerInfo.coins + 20;
             break;
         } else {
             console.log("attack again.");
-            window.alert(enemyName + " is not impressed, keep fighting " + playerName + "!");
+            window.alert(enemyInfo.name + " is not impressed, keep fighting " + playerInfo.name + "!");
         }; 
             //Check Player health
-        var damage = randomNumber(enemyAttack - 3, enemyAttack);    
+        var damage = randomNumber(enemyInfo.attack - 3, enemyInfo.attack);    
 
-        playerHealth = Math.max(0, playerHealth - damage);
+        playerInfo.health = Math.max(0, playerInfo.health - damage);
         console.log(
-            enemyName + " hit " + playerName + ", " + playerName+ " has " + playerHealth + " health remaining."
+            enemyInfo.name + " hit " + playerInfo.name + ", " + playerInfo.name+ " has " + playerInfo.health + " health remaining."
         );
         window.alert(
-            enemyName + " slashed you back! Holy cow " + playerName + ", you're bleeding pretty good there! You have " + playerHealth + " health remaining!"
+            enemyInfo.name + " slashed you back! Holy cow " + playerInfo.name + ", you're bleeding pretty good there! You have " + playerInfo.health + " health remaining!"
         );
             //check player health
-        if(playerHealth <= 0){
+        if(playerInfo.health <= 0){
             console.log("game over");
-                if(playerCoins > 1){
-                    window.alert("You stagger on your feet due to blood loss. " + enemyName + " chops you in half vertically and takes " + playerCoins + " bloody coins from your pockets while lauging robotically.");
+                if(playerInfo.coins > 1){
+                    window.alert("You stagger on your feet due to blood loss. " + enemyInfo.name + " chops you in half vertically and takes " + playerInfo.coins + " bloody coins from your pockets while lauging robotically.");
                 }
                 else {
-                    window.alert("You stagger on your feet due to blood loss. " + enemyName + " chops you in half vertically and takes " + playerCoins + " bloody coin from your pocket while lauging robotically.");
+                    window.alert("You stagger on your feet due to blood loss. " + enemyInfo.name + " chops you in half vertically and takes " + playerInfo.coins + " bloody coin from your pocket while lauging robotically.");
                 }
                     break;
                 
         } 
         else {
             console.log("attack again.");
-            window.alert(enemyName + " is confused. Why aren't you dead " + playerName + "?!");
+            window.alert(enemyInfo.name + " is confused. Why aren't you dead " + playerInfo.name + "?!");
         }
         
     }
@@ -96,17 +68,20 @@ var fight = function (enemyName){
 
 
 var startGame = function(){
-    playerHealth = 100;
-    playerAttack = 10;
-    playerCoins = 10;
+    playerInfo.reset();
     
-    for(var i=0; i < enemyNames.length; i++) {
+    for(var i=0; i < enemyInfo.length; i++) {
         
-        if(playerHealth > 0){
-            window.alert("Round " + (i+1) + " vs " + enemyNames[i] + ", Cut him up " + playerName + "!");
-            var pickEnemyName = enemyNames[i];
-            fight(pickEnemyName);
-            if(playerHealth > 0 && enemyNames.length - 1) {
+        if(playerInfo.health > 0){
+            window.alert("Welcome to Robots with Swords! Where human warriors fight robots with regular ol' swords!");
+            window.alert("Draw swords, time to fight a robot " + playerInfo.name + "!");
+            window.alert("Round " + (i+1) + " vs " + enemyInfo[i].name + ", Cut him up " + playerInfo.name + "!");
+            
+            var pickEnemyObj = enemyInfo[i];
+            pickEnemyObj.health = randomNumber(40, 60);
+            fight(pickEnemyObj);
+            
+            if(playerInfo.health > 0 && enemyInfo.length - 1) {
                 var storeConfirm = window.confirm("The fight is over. You should visit the store before another robot gets here. Would you like to visit the store?");
                 if(storeConfirm){
                     shop();
@@ -123,8 +98,8 @@ endGame();
 };
 
 var endGame = function(){
-    if(playerHealth > 0){
-        window.alert("Well fought, brave warrior. You beat all the robots and made it out with " + playerCoins + " coins. Don't spend it all in one place!");
+    if(playerInfo.health > 0){
+        window.alert("Well fought, brave warrior. You beat all the robots and made it out with " + playerInfo.coins + " coins. Don't spend it all in one place!");
     } 
     else {
         window.alert("You die in disgrace.");
@@ -135,7 +110,7 @@ var endGame = function(){
         startGame();
     } 
     else {
-        window.alert=("Thanks for playing, " + playerName + "! See you next time!");
+        window.alert=("Thanks for playing, " + playerInfo.name + "! See you next time!");
     }
 };
 
@@ -143,41 +118,24 @@ var endGame = function(){
 var shop = function(){
     var shopOptions = window.prompt(
         "Welcome to the store! Would you like to REFILL your health, UPGRADE your sword, or LEAVE? Don't waste my time!"
-    );
-    
+    );    
     switch(shopOptions){
         case "REFILL":
         case "refill":
-            if(playerCoins >=10){
-                window.alert("For the price of 10 coins, you're back at 100 health again" + playerName);
-                playerHealth = 100;
-                playerCoins = playerCoins - 10;
-                
-        } 
-        else {
-            window.alert("You're too poor to afford this!");
-        }
+            playerInfo.refillHealth();
             break;
         case "UPRGADE":
         case "upgrade":
-            if(playerCoins >= 6){
-                window.alert("For the price of 6 coins you get this sweet new sword! You deal 10 more attack damage");
-                playerAttack = playerAttack + 10;
-                playerCoins = playerCoins - 6;
-        }
-        else {
-            window.alert("You're too poor for this!");
-        }
+            playerInfo.upgradeAttack();
             break;
         case "LEAVE":
         case "leave":
-            window.alert("Well, good luck out there " + playerName);
+            window.alert("Well, good luck out there " + playerInfo.name);
             break;
         default:
-            window.alert("Don't waste my time " + playerName + " do you want to REFILL or UPGRADE?");
+            window.alert("Don't waste my time " + playerInfo.name + " do you want to REFILL or UPGRADE?");
             shop();
-            break;
-        
+            break;        
     }
 };
 
@@ -186,5 +144,70 @@ var randomNumber = function(min, max){
 
     return value;
 };
+
+var playerInfo = {
+    name : window.prompt("Every warrior has a cool name. What do you call yourself?"),
+    health : 100,
+    attack : 10,
+    coins : 10,
+    reset : function(){
+        this.health = 100;
+        this.coin = 10;
+        this.attack = 10;
+    },
+    refillHealth: function(){
+        if(playerInfo.coins >=10){
+            window.alert("For the price of 10 coins, you're back at 85 health again" + playerInfo.name);
+            this.health = 85;
+            this.coin -= 10;              
+        } 
+        else {
+            window.alert("You're too poor to afford this!");
+        }
+    },
+    upgradeAttack: function(){
+        if(playerInfo.coins >= 6){
+            window.alert("For the price of 6 coins you get this sweet new sword! You deal 10 more attack damage");
+            this.attack += 10;
+            this.coin -= 6;
+        }
+        else {
+            window.alert("You're too poor for this!");
+        }
+    }
+};
+console.log(playerInfo);
+
+
+
+var enemyInfo = [
+    {
+        name: "Roborto",
+        attack: randomNumber(10,14)
+    },
+    {
+        name: "Minotron",
+        attack: randomNumber(10,14)
+    },
+    { 
+        name: "Virus",
+        attack: randomNumber(10,14)
+    },
+    {
+        name: "Leadfoot",
+        attack: randomNumber(10,14)
+    },
+    {
+        name: "Meningitis",
+        attack: randomNumber(10,14)
+    }
+];
+
+console.log(enemyInfo);
+console.log(enemyInfo[0]);
+console.log(enemyInfo[0].name);
+console.log(enemyInfo[0]["attack"]);
+
+
 
 startGame();
