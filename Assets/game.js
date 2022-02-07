@@ -24,60 +24,67 @@ var fightOskip = function() {
 
 var fight = function (enemyInfo){
     //Round intro
+    var isPlayerTurn = true;
+
+    if(Math.random() > 0.5){
+        isPlayerTurn = false;
+    }
+
     while(playerInfo.health > 0 && enemyInfo.health > 0){
+        if(isPlayerTurn) {
+            //Fight or skip
+            if (fightOskip()) {
+                break;
+            }
 
-        //Fight or skip
-        if (fightOskip()) {
-            break;
-        }
-
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);  
-            
-        enemyInfo.health = Math.max(0, enemyInfo.health - damage);
-
-        console.log(
-            playerInfo.name + " slashed " + enemyInfo.name + ". " + enemyInfo.name + " now has " + enemyInfo.health + " health remaining."
-        );
-        window.alert( 
-            "You slashed " + enemyInfo.name + ". " + enemyInfo.name + " now has " + enemyInfo.health + " health remaining."
-        );
-            // Check Enemy Health
-        if(enemyInfo.health <= 0){
-            console.log(playerInfo.name + " wins!");
-            window.alert(enemyInfo.name + " incurred too much damage, then out of overwhelming shame commited robot seppoku, " + playerInfo.name + " wins!");
-            playerInfo.coins = playerInfo.coins + 20;
-            break;
-        } else {
-            console.log("attack again.");
-            window.alert(enemyInfo.name + " is not impressed, keep fighting " + playerInfo.name + "!");
-        }; 
-            //Check Player health
-        var damage = randomNumber(enemyInfo.attack - 3, enemyInfo.attack);    
-
-        playerInfo.health = Math.max(0, playerInfo.health - damage);
-        console.log(
-            enemyInfo.name + " hit " + playerInfo.name + ", " + playerInfo.name+ " has " + playerInfo.health + " health remaining."
-        );
-        window.alert(
-            enemyInfo.name + " slashed you back! Holy cow " + playerInfo.name + ", you're bleeding pretty good there! You have " + playerInfo.health + " health remaining!"
-        );
-            //check player health
-        if(playerInfo.health <= 0){
-            console.log("game over");
-                if(playerInfo.coins > 1){
-                    window.alert("You stagger on your feet due to blood loss. " + enemyInfo.name + " chops you in half vertically and takes " + playerInfo.coins + " bloody coins from your pockets while lauging robotically.");
-                }
-                else {
-                    window.alert("You stagger on your feet due to blood loss. " + enemyInfo.name + " chops you in half vertically and takes " + playerInfo.coins + " bloody coin from your pocket while lauging robotically.");
-                }
-                    break;
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);  
                 
-        } 
-        else {
-            console.log("attack again.");
-            window.alert(enemyInfo.name + " is confused. Why aren't you dead " + playerInfo.name + "?!");
+            enemyInfo.health = Math.max(0, enemyInfo.health - damage);
+
+            console.log(
+                playerInfo.name + " slashed " + enemyInfo.name + ". " + enemyInfo.name + " now has " + enemyInfo.health + " health remaining."
+            );
+            window.alert( 
+                "You slashed " + enemyInfo.name + ". " + enemyInfo.name + " now has " + enemyInfo.health + " health remaining."
+            );
+                // Check Enemy Health
+            if(enemyInfo.health <= 0){
+                console.log(playerInfo.name + " wins!");
+                window.alert(enemyInfo.name + " incurred too much damage, then out of overwhelming shame commited robot seppoku, " + playerInfo.name + " wins!");
+                playerInfo.coins = playerInfo.coins + 20;
+                break;
+            } else {
+                console.log("attack again.");
+                window.alert(enemyInfo.name + " is not impressed, keep fighting " + playerInfo.name + "!");
+            }; 
+    } else {            //Check Player health
+            var damage = randomNumber(enemyInfo.attack - 3, enemyInfo.attack);    
+
+            playerInfo.health = Math.max(0, playerInfo.health - damage);
+            console.log(
+                enemyInfo.name + " hit " + playerInfo.name + ", " + playerInfo.name+ " has " + playerInfo.health + " health remaining."
+            );
+            window.alert(
+                enemyInfo.name + " slashed you! Holy cow " + playerInfo.name + ", you're bleeding pretty good there! You have " + playerInfo.health + " health remaining!"
+            );
+                //check player health
+            if(playerInfo.health <= 0){
+                console.log("game over");
+                    if(playerInfo.coins > 1){
+                        window.alert("You stagger on your feet due to blood loss. " + enemyInfo.name + " chops you in half vertically and takes " + playerInfo.coins + " bloody coins from your pockets while lauging robotically.");
+                    }
+                    else {
+                        window.alert("You stagger on your feet due to blood loss. " + enemyInfo.name + " chops you in half vertically and takes " + playerInfo.coins + " bloody coin from your pocket while lauging robotically.");
+                    }
+                        break;
+                    
+            } 
+            else {
+                console.log("attack again.");
+                window.alert(enemyInfo.name + " is confused. Why aren't you dead " + playerInfo.name + "?!");
+            }
         }
-        
+        isPlayerTurn = !isPlayerTurn
     }
     
 };
