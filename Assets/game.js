@@ -1,19 +1,36 @@
+window.alert("Welcome to Robots with Swords! Where human warriors fight robots with regular ol' swords!");
+
+var fightOskip = function() {
+    var fightPrompt = window.prompt("The robot asks will you FIGHT or FLEE? What will you do?");
+//conditional recursive function
+    if(fightPrompt === "" || fightPrompt === null){
+        window.alert("Don't test my robot patience " + playerInfo.name + " answer my question!");
+        return fightOskip();
+    }
+    fightPrompt = fightPrompt.toLowerCase();
+
+    if(fightPrompt === "flee"){
+        var confirmSkip = window.confirm("You mean you won't fight the robot? The point of the game is to FIGHT the ROBOTS with SWORDS...");
+        if (confirmSkip) {
+            window.alert("The robot has decided to spare your life for 10 coins. There's other robots to fight anyway");
+            playerInfo.coins = Math.max(0, playerInfo.coins - 10);
+            console.log("playerInfo.coins = ", playerInfo.coins);
+            return true;
+        }
+    } else{
+         return false;
+    }
+};
+
 var fight = function (enemyInfo){
     //Round intro
     while(playerInfo.health > 0 && enemyInfo.health > 0){
 
-    //Fight or skip
-        var fightPrompt = window.prompt("The robot asks will you FIGHT or FLEE? What will you do?");
-        // Round Start
-        if(fightPrompt === "FLEE" || fightPrompt === "flee"){
-            var confirmSkip = window.confirm("You mean you won't fight " + enemyInfo.name + " the robot? The point of the game is to FIGHT the ROBOTS with SWORDS...");
-            if (confirmSkip) {
-                window.alert(enemyInfo.name + " has decided to spare your life for 10 coins. There's other robots to fight anyway");
-                playerInfo.coins = Math.max(0, playerInfo.coins - 10);
-                console.log("playerInfo.coins = ", playerInfo.coins);
-                break;
-            }
-        };
+        //Fight or skip
+        if (fightOskip()) {
+            break;
+        }
+
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);  
             
         enemyInfo.health = Math.max(0, enemyInfo.health - damage);
@@ -72,7 +89,7 @@ var startGame = function(){
     for(var i=0; i < enemyInfo.length; i++) {
         
         if(playerInfo.health > 0){
-            window.alert("Welcome to Robots with Swords! Where human warriors fight robots with regular ol' swords!");
+            //window.alert("Welcome to Robots with Swords! Where human warriors fight robots with regular ol' swords!");
             window.alert("Draw swords, time to fight a robot " + playerInfo.name + "!");
             window.alert("Round " + (i+1) + " vs " + enemyInfo[i].name + ", Cut him up " + playerInfo.name + "!");
             
@@ -81,7 +98,7 @@ var startGame = function(){
             fight(pickEnemyObj);
             
             if(playerInfo.health > 0 && enemyInfo.length - 1) {
-                var storeConfirm = window.confirm("The fight is over. You should visit the store before another robot gets here. Would you like to visit the store?");
+                var storeConfirm = window.confirm("You should visit the store before another robot gets here. Would you like to visit the store?");
                 if(storeConfirm){
                     shop();
                 }
