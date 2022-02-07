@@ -133,19 +133,19 @@ var endGame = function(){
 
 var shop = function(){
     var shopOptions = window.prompt(
-        "Welcome to the store! Would you like to REFILL your health, UPGRADE your sword, or LEAVE? Don't waste my time!"
+        "Welcome to the store! Type 1 to REFILL your health, type 2 to UPGRADE your sword, or type 3 to LEAVE! Don't waste my time!"
     );    
+    
+    shopOptions = parseInt(shopOptions);
+    
     switch(shopOptions){
-        case "REFILL":
-        case "refill":
+        case 1:
             playerInfo.refillHealth();
             break;
-        case "UPRGADE":
-        case "upgrade":
+        case 1:
             playerInfo.upgradeAttack();
             break;
-        case "LEAVE":
-        case "leave":
+        case 3:
             window.alert("Well, good luck out there " + playerInfo.name);
             break;
         default:
