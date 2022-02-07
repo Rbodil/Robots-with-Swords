@@ -144,7 +144,7 @@ var randomNumber = function(min, max){
     return value;
 };
 
-var getPlayerName = function{
+var getPlayerName = function() {
     var getPN = window.prompt("Every warrior has a cool name. What do you call yourself?");
     while (getPN === "" || getPN === null){
         getPN = prompt("Hold on there butt head, identify yourself!")
