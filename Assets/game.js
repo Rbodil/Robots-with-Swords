@@ -123,13 +123,13 @@ endGame();
 var endGame = function(){
     window.alert("Well fought, brave warrior. You beat all the robots and made it out with " + playerInfo.coins + " coins. Don't spend it all in one place!");
 
-    var highScore = localStorage.getItem("highscore", true);
+    var highScore = localStorage.getItem("highscore");
 
     if (highScore === null) {
         highScore = 0;
     }
 
-    if (highScore < playerInfo.money) {
+    if (playerInfo.money > highScore) {
         localStorage.setItem("highscore", playerInfo.money);
         localStorage.setItem("name", playerInfo.name);
 
@@ -139,7 +139,7 @@ var endGame = function(){
     } 
     else {
         alert("The High Score is " + highScore + " coins. Play again if you want to beat it!");
-    };
+    }
     
     var playAgain = window.confirm("Would you like to play again?");
 
