@@ -121,12 +121,26 @@ endGame();
 };
 
 var endGame = function(){
-    if(playerInfo.health > 0){
-        window.alert("Well fought, brave warrior. You beat all the robots and made it out with " + playerInfo.coins + " coins. Don't spend it all in one place!");
+    window.alert("Well fought, brave warrior. You beat all the robots and made it out with " + playerInfo.coins + " coins. Don't spend it all in one place!");
+
+    var highScore = localStorage.getItem("highscore", true);
+
+    if (highScore === null) {
+        highScore = 0;
+    }
+
+    if (highScore < playerInfo.money) {
+        localStorage.setItem("highscore", playerInfo.money);
+        localStorage.setItem("name", playerInfo.name);
+
+
+        alert("New High Score! " + playerInfo.name + " set the New High Score of " + playerInfo.money + " coins!");
+
     } 
     else {
-        window.alert("You die in disgrace.");
-    }
+        alert("The High Score is " + highScore + " coins. Play again if you want to beat it!");
+    };
+    
     var playAgain = window.confirm("Would you like to play again?");
 
     if (playAgain) {
@@ -135,6 +149,7 @@ var endGame = function(){
     else {
         window.alert=("Thanks for playing, " + playerInfo.name + "! See you next time!");
     }
+    
 };
 
 
@@ -149,7 +164,7 @@ var shop = function(){
         case 1:
             playerInfo.refillHealth();
             break;
-        case 1:
+        case 2:
             playerInfo.upgradeAttack();
             break;
         case 3:
