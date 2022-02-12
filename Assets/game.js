@@ -129,12 +129,12 @@ var endGame = function(){
         highScore = 0;
     }
 
-    if (playerInfo.money > highScore) {
-        localStorage.setItem("highscore", playerInfo.money);
+    if (playerInfo.coins > highScore) {
+        localStorage.setItem("highscore", playerInfo.coins);
         localStorage.setItem("name", playerInfo.name);
 
 
-        alert("New High Score! " + playerInfo.name + " set the New High Score of " + playerInfo.money + " coins!");
+        alert("New High Score! " + playerInfo.name + " set the New High Score of " + playerInfo.coins + " coins!");
 
     } 
     else {
